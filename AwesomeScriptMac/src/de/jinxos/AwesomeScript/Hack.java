@@ -23,7 +23,7 @@ public class Hack {
 		Original = new byte[Size];
 	}
 	
-	// Load hack from .properties file, example: asmac.properties
+	// Load hack from .properties file, example: asmac.prop
 	public static Hack FromProperties(Properties p, int offset)
 	{
 		try
