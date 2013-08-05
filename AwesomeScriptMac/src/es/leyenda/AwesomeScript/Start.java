@@ -1,4 +1,5 @@
 package es.leyenda.AwesomeScript;
+import de.jinxos.AwesomeScript.*;
 
 public class Start {
 
