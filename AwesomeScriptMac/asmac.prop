@@ -1,0 +1,36 @@
+#This is an example file, for the actual asmac.prop download http://www.jinxos.bugs3.com/asmac.prop
+#
+#Name
+name0=No Cooldown
+#Key to press for the hack, normal KeyEvent type. All keys from 0-9 and A-Z are allowed
+key0=5
+#Size of the hack in bytes
+size0=3
+#Location of the hack in the memory
+ptr0=3097907
+#Replacement
+repl0=909090
+#
+name1=No Charge
+key1=6
+size1=8
+ptr1=3050667
+repl1=9090909090909090
+#
+name2=No Increase
+key2=7
+size2=1
+ptr2=3110270
+repl2=90
+#
+name3=Megataunt
+key3=8
+size3=3
+ptr3=1868714
+repl3=909090
+#
+name4=No Bot AI
+key4=9
+size4=3
+ptr4=3783508
+repl4=909090
