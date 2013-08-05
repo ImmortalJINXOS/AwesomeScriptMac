@@ -2,7 +2,6 @@ package de.jinxos.AwesomeScript;
 
 public class MemoryWriter {
 
-	public native int WriteMemory(int task, int pointer, int size, byte[] replace);
-	public native int ReadMemory(int task, int pointer, int size, byte[] target);
-	public native int GetTask(int pid);
+	public static native int CopyMemory(int task, int sourceptr, int size, int destinationptr);
+	public static native int GetTask(int pid);
 }
