@@ -1,9 +1,5 @@
 package es.leyenda.AwesomeScript;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import javax.swing.JOptionPane;
 
 import de.jinxos.AwesomeScript.*;
