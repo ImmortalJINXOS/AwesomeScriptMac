@@ -1,5 +1,11 @@
 package es.leyenda.AwesomeScript;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.swing.JOptionPane;
+
 import de.jinxos.AwesomeScript.*;
 
 public class Start {
@@ -10,24 +16,21 @@ public class Start {
 	public static int BaseAddress;
 	
 	public static void main(String[] args) {
-		// This is your workspace, all the memory stuff is in de.jinxos.AwesomeScript
-		if (System.getProperty("sun.arch.data.model") == "32")
-			System.loadLibrary("AwesomeScriptNative");
-		else
-			System.loadLibrary("AwesomeScriptNative64");
-		
-		AS = new AwesomeScript();
-		PCT = new UpdateThread();
-		PCT.start();
-		AS.setVisible(true);
-		while (true)
+		try
 		{
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			if (System.getProperty("sun.arch.data.model") == "32")
+				System.loadLibrary("AwesomeScriptNative");
+			else
+				System.loadLibrary("AwesomeScriptNative64");
+			
+			AS = new AwesomeScript();
+			PCT = new UpdateThread();
+			PCT.start();
+			AS.setVisible(true);
+		}
+		catch (Exception e)
+		{
+			JOptionPane.showMessageDialog(null, e, "Error", 0);
 		}
 	}
 
