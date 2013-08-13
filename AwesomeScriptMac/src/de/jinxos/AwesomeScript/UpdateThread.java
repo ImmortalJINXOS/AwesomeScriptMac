@@ -34,6 +34,7 @@ public class UpdateThread extends Thread {
 					Start.AS.btnToggleNoCharge.setEnabled(true);
 					Start.AS.btnToggleNoIncrease.setEnabled(true);
 					Start.NautsHandle = MemoryWriter.OpenTask(IsRunning);
+					while (Start.BaseAddress != 0xAF0000)
 					Start.BaseAddress = MemoryWriter.GetBaseAddress(Start.NautsHandle);
 					System.out.println("Base Address: 0x" + Integer.toHexString(Start.BaseAddress));
 				}

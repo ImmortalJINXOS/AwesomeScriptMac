@@ -4,9 +4,6 @@ import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
-import com.sun.jna.Memory;
-import com.sun.jna.Pointer;
-
 import es.leyenda.AwesomeScript.Start;
 
 public class Hack {
@@ -24,7 +21,6 @@ public class Hack {
 		Ptr = pointer;
 		Size = size;
 		Replace = repl;
-		Original = new byte[Size];
 	}
 	
 	// Load hack from .properties file, example: asmac.prop
@@ -59,29 +55,30 @@ public class Hack {
 	public boolean Toggle() {
 		try
 		{
+			int address = Start.BaseAddress + Ptr;
 			System.out.println("Enabled: " + !Enabled);
-			System.out.println("Address: 0x" + Integer.toHexString(Start.BaseAddress + Ptr));
+			System.out.println("Address: 0x" + Integer.toHexString(address));
 			if (!Enabled)
 			{
-				Pointer newmem = new Memory(Size);
-				Pointer oldmem = new Memory(Size);
-				MemoryWriter.ReadMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(oldmem));
+				int newmem = MemoryWriter.AllocateBytes(Replace);
+				int oldmem = MemoryWriter.AllocateMemory(Size);
+				int rm = MemoryWriter.ReadMemory(Start.NautsHandle, address, Size, oldmem);
 				System.out.println("ReadMemError: " + MemoryWriter.GetLastError());
-				oldmem.read(0, Original, 0, Size);
-				newmem.write(0, Replace, 0, Size);
-				MemoryWriter.ProtectMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
+				Original = MemoryWriter.GetBytes(oldmem, Size);
+				int pm = MemoryWriter.ProtectMemory(Start.NautsHandle, address, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
 				System.out.println("ProtMemError: " + MemoryWriter.GetLastError());
-				MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem));
+				int wm = MemoryWriter.WriteMemory(Start.NautsHandle, address, Size, newmem);
 				System.out.println("WriteMemError: " + MemoryWriter.GetLastError());
+				System.out.println("Errors: " + rm + " " + pm + " " + wm);
 			}
 			else
 			{
-				Pointer newmem = new Memory(Size);
-				newmem.write(0, Original, 0, Size);
-				MemoryWriter.ProtectMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
+				int newmem = MemoryWriter.AllocateBytes(Original);
+				int pm = MemoryWriter.ProtectMemory(Start.NautsHandle, address, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
 				System.out.println("ProtError: " + MemoryWriter.GetLastError());
-				MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem));
+				int wm = MemoryWriter.WriteMemory(Start.NautsHandle, address, Size, newmem);
 				System.out.println("WriteMemError: " + MemoryWriter.GetLastError());
+				System.out.println("Errors: " + pm + " " + wm);
 			}
 			Enabled = !Enabled;
 		}

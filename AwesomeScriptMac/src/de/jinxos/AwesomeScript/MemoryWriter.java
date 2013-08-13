@@ -14,4 +14,7 @@ public class MemoryWriter {
 	public static native int CloseTask(int task);
 	public static native int ProtectMemory(int task, int address, int size, int protection);
 	public static native String GetLastError();
+	public static native int AllocateBytes(byte[] bytes);
+	public static native int AllocateMemory(int size);
+	public static native byte[] GetBytes(int address, int size);
 }
