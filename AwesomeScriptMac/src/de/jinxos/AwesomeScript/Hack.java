@@ -60,26 +60,28 @@ public class Hack {
 		try
 		{
 			System.out.println("Enabled: " + !Enabled);
-			System.out.println("Error: " + MemoryWriter.GetLastError());
+			System.out.println("Address: 0x" + Integer.toHexString(Start.BaseAddress + Ptr));
 			if (!Enabled)
 			{
 				Pointer newmem = new Memory(Size);
 				Pointer oldmem = new Memory(Size);
-				System.out.println("ReadMemory: " + MemoryWriter.ReadMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(oldmem)));
-				System.out.println("Error: " + MemoryWriter.GetLastError());
+				MemoryWriter.ReadMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(oldmem));
+				System.out.println("ReadMemError: " + MemoryWriter.GetLastError());
 				oldmem.read(0, Original, 0, Size);
 				newmem.write(0, Replace, 0, Size);
 				MemoryWriter.ProtectMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
-				System.out.println("WriteMemory: " + MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem)));
-				System.out.println("Error: " + MemoryWriter.GetLastError());
+				System.out.println("ProtMemError: " + MemoryWriter.GetLastError());
+				MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem));
+				System.out.println("WriteMemError: " + MemoryWriter.GetLastError());
 			}
 			else
 			{
 				Pointer newmem = new Memory(Size);
 				newmem.write(0, Original, 0, Size);
 				MemoryWriter.ProtectMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
-				System.out.println("WriteMemory: " + MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem)));
-				System.out.println("Error: " + MemoryWriter.GetLastError());
+				System.out.println("ProtError: " + MemoryWriter.GetLastError());
+				MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem));
+				System.out.println("WriteMemError: " + MemoryWriter.GetLastError());
 			}
 			Enabled = !Enabled;
 		}
