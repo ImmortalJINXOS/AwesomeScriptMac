@@ -70,6 +70,7 @@ public class Hack {
 				int wm = MemoryWriter.WriteMemory(Start.NautsHandle, address, Size, newmem);
 				System.out.println("WriteMemError: " + MemoryWriter.GetLastError());
 				System.out.println("Errors: " + rm + " " + pm + " " + wm);
+				
 			}
 			else
 			{
