@@ -34,9 +34,7 @@ public class UpdateThread extends Thread {
 					Start.AS.btnToggleNoCharge.setEnabled(true);
 					Start.AS.btnToggleNoIncrease.setEnabled(true);
 					Start.NautsHandle = MemoryWriter.OpenTask(IsRunning);
-					while (Start.BaseAddress < 0x100000 || Start.BaseAddress > 0xBFFFFF)
-						Start.BaseAddress = MemoryWriter.GetBaseAddress(Start.NautsHandle);
-					System.out.println("Base Address: 0x" + Integer.toHexString(Start.BaseAddress));
+					Start.BaseAddress = MemoryWriter.GetBaseAddress(IsRunning);
 				}
 				else if (IsRunning == 0 && Start.AS.btnToggleMegataunt.isEnabled())
 				{

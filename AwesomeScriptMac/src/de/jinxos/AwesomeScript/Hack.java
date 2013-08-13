@@ -56,30 +56,20 @@ public class Hack {
 		try
 		{
 			int address = Start.BaseAddress + Ptr;
-			System.out.println("Enabled: " + !Enabled);
-			System.out.println("Address: 0x" + Integer.toHexString(address));
 			if (!Enabled)
 			{
 				int newmem = MemoryWriter.AllocateBytes(Replace);
 				int oldmem = MemoryWriter.AllocateMemory(Size);
 				int rm = MemoryWriter.ReadMemory(Start.NautsHandle, address, Size, oldmem);
-				System.out.println("ReadMemError: " + MemoryWriter.GetLastError());
 				Original = MemoryWriter.GetBytes(oldmem, Size);
 				int pm = MemoryWriter.ProtectMemory(Start.NautsHandle, address, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
-				System.out.println("ProtMemError: " + MemoryWriter.GetLastError());
 				int wm = MemoryWriter.WriteMemory(Start.NautsHandle, address, Size, newmem);
-				System.out.println("WriteMemError: " + MemoryWriter.GetLastError());
-				System.out.println("Errors: " + rm + " " + pm + " " + wm);
-				
 			}
 			else
 			{
 				int newmem = MemoryWriter.AllocateBytes(Original);
 				int pm = MemoryWriter.ProtectMemory(Start.NautsHandle, address, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
-				System.out.println("ProtError: " + MemoryWriter.GetLastError());
 				int wm = MemoryWriter.WriteMemory(Start.NautsHandle, address, Size, newmem);
-				System.out.println("WriteMemError: " + MemoryWriter.GetLastError());
-				System.out.println("Errors: " + pm + " " + wm);
 			}
 			Enabled = !Enabled;
 		}

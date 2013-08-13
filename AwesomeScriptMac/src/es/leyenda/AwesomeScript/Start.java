@@ -17,7 +17,6 @@ public class Start {
 			System.loadLibrary("AwesomeScriptNative64");
 		
 		AS = new AwesomeScript();
-		
 		PCT = new UpdateThread();
 		PCT.start();
 		AS.setVisible(true);
