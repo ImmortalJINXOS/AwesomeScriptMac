@@ -5,6 +5,7 @@ public class MemoryWriter {
 	public static int VM_READ = 1;
 	public static int VM_WRITE = 2;
 	public static int VM_EXECUTE = 4;
+	public static int PAGE_EXECUTE_WRITE = 0x40;
 	
 	public static native int GetBaseAddress(int task);
 	public static native int ReadMemory(int task, int sourceptr, int size, int destinationptr);

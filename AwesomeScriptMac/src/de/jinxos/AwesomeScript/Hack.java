@@ -59,26 +59,26 @@ public class Hack {
 	public boolean Toggle() {
 		try
 		{
-			int BAddress = MemoryWriter.GetBaseAddress(Start.NautsHandle);
 			System.out.println("Enabled: " + !Enabled);
-			System.out.println("Address: " + Integer.toHexString(BAddress));
 			System.out.println("Error: " + MemoryWriter.GetLastError());
 			if (!Enabled)
 			{
 				Pointer newmem = new Memory(Size);
 				Pointer oldmem = new Memory(Size);
-				System.out.println("ReadMemory: " + MemoryWriter.ReadMemory(Start.NautsHandle, Ptr + BAddress, Size, (int)Pointer.nativeValue(oldmem)));
+				System.out.println("ReadMemory: " + MemoryWriter.ReadMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(oldmem)));
 				System.out.println("Error: " + MemoryWriter.GetLastError());
 				oldmem.read(0, Original, 0, Size);
 				newmem.write(0, Replace, 0, Size);
-				System.out.println("WriteMemory: " + MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + BAddress, Size, (int)Pointer.nativeValue(newmem)));
+				MemoryWriter.ProtectMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
+				System.out.println("WriteMemory: " + MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem)));
 				System.out.println("Error: " + MemoryWriter.GetLastError());
 			}
 			else
 			{
 				Pointer newmem = new Memory(Size);
 				newmem.write(0, Original, 0, Size);
-				System.out.println("WriteMemory: " + MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + BAddress, Size, (int)Pointer.nativeValue(newmem)));
+				MemoryWriter.ProtectMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, MemoryWriter.PAGE_EXECUTE_WRITE);
+				System.out.println("WriteMemory: " + MemoryWriter.WriteMemory(Start.NautsHandle, Ptr + Start.BaseAddress, Size, (int)Pointer.nativeValue(newmem)));
 				System.out.println("Error: " + MemoryWriter.GetLastError());
 			}
 			Enabled = !Enabled;

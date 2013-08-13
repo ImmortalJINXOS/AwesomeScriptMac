@@ -7,6 +7,7 @@ public class Start {
 	public static AwesomeScript AS;
 	public static UpdateThread PCT;
 	public static int NautsHandle;
+	public static int BaseAddress;
 	
 	public static void main(String[] args) {
 		// This is your workspace, all the memory stuff is in de.jinxos.AwesomeScript
